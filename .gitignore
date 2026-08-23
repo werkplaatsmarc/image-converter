@@ -1,0 +1,17 @@
+# PyInstaller build-artefacten (worden opnieuw gegenereerd, niet committen)
+build/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# Lokale staging-map voor de release-zip (geen broncode, hoeft niet in de repo)
+Image Converter/
+
+# Claude Code sessie-data
+.claude/
+
+# OS-rommel
+Thumbs.db
+.DS_Store
