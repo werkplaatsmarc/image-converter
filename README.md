@@ -1,76 +1,65 @@
-# Image Converter
+# Model Index
 
-Gratis Windows-tool om afbeeldingen te converteren, resizen, achtergronden te verwijderen (AI) en te vectoriseren naar SVG — gemaakt door [Werkplaats Marc](https://werkplaatsmarc.be).
+Een gratis tool van [Werkplaats Marc](https://www.werkplaatsmarc.be) · A free tool by [Werkplaats Marc](https://www.werkplaatsmarc.be)
 
-Ook beschikbaar als [online webversie](https://werkplaatsmarc.be/image-converter.html) — geen installatie nodig, werkt direct in je browser, en is als PWA te installeren als app (icoon op je beginscherm, werkt offline na de eerste keer). Handig voor wie geen Windows draait of niets wil downloaden.
+**NL** · [English below](#english)
 
-## Functies
+Een gratis, volledig lokale bibliotheek voor je 3D-printbestanden (**STL, 3MF, OBJ**). Voeg je bestanden toe, zie meteen thumbnails, bekijk ze in 3D en geef ze een naam, tags en notities, zodat je weer weet wat wat is. Werkt op telefoon, tablet en pc en kan als app geïnstalleerd worden.
 
-- **Formaten converteren**: WebP, JPG, PNG, TIFF, BMP, GIF, ICO
-- **Resizen** met behoud van beeldverhouding
-- **Achtergrond verwijderen (AI)** — volledig lokaal, geen internetverbinding nodig na installatie
-- **SVG-vectorisatie** — zet een afbeelding om in echte schaalbare vormen (handig voor logo's, Tinkercad, lasersnijden, ...)
-- **Batchverwerking** — meerdere bestanden of een hele map in één keer
-- Kwaliteitsinstelling voor JPG/WebP
-- Geen data verlaat je pc — alles gebeurt lokaal
+- **Niets wordt geüpload.** Alles draait in je browser; er is geen server of account.
+- **Je originelen blijven ongemoeid.** De app bewaart een kopie in de browser en voegt enkel een eigen catalogus toe.
+- **Selecteren:** vink modellen aan (rechtsboven op de kaart) en verplaats ze samen naar een map, geef ze tags of verwijder ze uit de bibliotheek. Mappen bestaan enkel binnen de app; je bestanden op schijf blijven staan.
+- **Schijf-koppeling (optioneel, Chrome/Edge op pc):** koppel een map in Instellingen en laat hernoemen en verplaatsen ook echt op schijf gebeuren. Verwijderen van schijf vraagt altijd een extra bevestiging en is niet ongedaan te maken. Op telefoon en tablet kan een webpagina dit niet.
+- **Dubbelen zoeken:** vind identieke bestanden onder verschillende namen en ruim ze op.
+- **Back-up:** exporteer alles als `.zip` (ook om van toestel te wisselen) of enkel de catalogus. Waar de browser het ondersteunt, deel je de back-up direct via het deelmenu (WhatsApp, e-mail, Drive, Bestanden); anders wordt ze gedownload.
+- Nederlands en Engels.
 
-## Download
+## Gebruiken
 
-Ga naar de [Releases-pagina](../../releases/latest) en download `image_converter.exe`. Geen installatie nodig — gewoon uitvoeren.
+1. Open de site (bv. via GitHub Pages) en kies *Toevoegen*, of sleep bestanden/mappen in het venster.
+2. Tik op een model om te draaien, in te zoomen en een naam, tags en notitie in te vullen.
+3. Maak af en toe een back-up via ⚙ Instellingen. Je bibliotheek staat enkel in deze browser; die kan opslag opruimen als er ruimte tekort is (vooral Safari op iPhone/iPad).
 
-> Bij eerste gebruik van "Achtergrond verwijderen" wordt eenmalig een AI-model gedownload (±175MB). Daarna werkt alles offline.
+Installeren als app: *Toevoegen aan beginscherm* (iOS/Android) of het installatie-icoon in de adresbalk (Chrome/Edge).
 
-## Gebruik
+## Zelf draaien / hosten
 
-1. Kies het gewenste uitvoerformaat en eventueel de kwaliteit
-2. Vink "Achtergrond verwijderen" of pas de afmetingen aan indien gewenst
-3. Klik op **Selecteer Bestanden** (of **Selecteer Map** voor een hele map)
-4. Klaar — de geconverteerde bestanden staan naast de originelen
-
-## Web-versie / PWA
-
-Geen Windows, of liever niets downloaden? De [online versie](https://werkplaatsmarc.be/image-converter.html) heeft dezelfde functies (formaten converteren, resizen, achtergrond verwijderen met AI, SVG-vectorisatie) en draait volledig in de browser — er wordt niets geüpload.
-
-Via "📲 Installeer als app" (Chrome/Edge/Android) of "Zet op beginscherm" (iOS Safari) installeer je 'm als PWA: icoon op je beginscherm, en na een eenmalige download (ongeveer 15-25MB voor de AI-onderdelen) werkt alles ook zonder internet.
-
-## Draaien vanuit broncode
-
-Vereist Python 3.10+.
+Het is een statische site zonder build-stap.
 
 ```bash
-pip install pillow rembg onnxruntime vtracer
-python image_converter.py
+python -m http.server 5173
+# open http://localhost:5173
 ```
 
-### Zelf bouwen tot .exe
+Voor GitHub Pages: zet de inhoud van deze map op een branch en activeer Pages. Verhoog `VERSION` in `sw.js` na elke wijziging, anders blijven bezoekers de oude offline-cache zien.
 
-```bash
-pip install pyinstaller
-pyinstaller image_converter.spec
-```
+## Beperkingen v1
 
-Het resultaat staat in `dist/image_converter.exe`.
+- Mapkeuze werkt niet overal (iOS kiest enkel losse bestanden).
+- Bestanden boven 150 MB krijgen geen automatische preview.
+- OBJ-kleuren: kies het `.mtl`-bestand samen met de `.obj` (kleuren per materiaal en per hoekpunt worden getoond, texturen niet). 3MF-kleuren van Bambu Studio/OrcaSlicer (filamentkleur per object of onderdeel en met de verfkwast geschilderde vlakken) worden getoond; geschilderde randen zijn op driehoeksniveau benaderd. PrusaSlicer-kleuren per extruder worden nog niet getoond.
+- Een back-up met alle bestanden wordt in het geheugen opgebouwd: bij een zeer grote bibliotheek kan dat zwaar zijn.
 
-## Gebruikte bibliotheken
+## English
 
-| Bibliotheek | Doel | Licentie |
-|---|---|---|
-| [Pillow](https://python-pillow.org/) | Beeldbewerking | MIT-CMU |
-| [rembg](https://github.com/danielgatis/rembg) | AI-achtergrondverwijdering | MIT |
-| [onnxruntime](https://onnxruntime.ai/) | AI-inferentie | MIT |
-| [vtracer](https://github.com/visioncortex/vtracer) | SVG-vectorisatie | MIT |
-| [U2Net](https://github.com/xuebinqin/U-2-Net) model | AI-model voor achtergrondverwijdering | Apache 2.0 |
-| [PyInstaller](https://pyinstaller.org/) | Bouwen tot .exe | GPL (met uitzondering voor gebouwde programma's) |
+A free, fully local library for your 3D-printing files (**STL, 3MF, OBJ**): add files, get instant thumbnails, inspect them in 3D and give them a name, tags and notes so you always know what is what. Works on phone, tablet and desktop and can be installed as an app.
 
-## Licentie
+- **Nothing is uploaded.** Everything runs in your browser; no server, no account.
+- **Your originals are never touched.** A copy is stored in the browser, plus your own catalog on top.
+- **Select:** tick models (top right of the card) to move them to a folder, tag them or remove them together. Folders only exist inside the app; your files on disk are left alone.
+- **Disk link (optional, Chrome/Edge on desktop):** link a folder in Settings and let renaming and moving really happen on disk. Deleting from disk always asks an extra confirmation and cannot be undone. A web page cannot do this on phones and tablets.
+- **Find duplicates:** spot identical files under different names and clear them out.
+- **Backup:** export everything as a `.zip` (also to switch devices) or just the catalog. Where the browser supports it, share the backup straight from the share sheet (WhatsApp, email, Drive, Files); otherwise it is downloaded.
+- Dutch and English.
 
-[MIT](LICENSE) — vrij te gebruiken, aan te passen en te herverspreiden, ook commercieel.
+Run it yourself: it is a static site, no build step (`python -m http.server`). For GitHub Pages, publish this folder and bump `VERSION` in `sw.js` after every change.
 
-## Meer van Werkplaats Marc
+## Credits
 
-- [YouTube](https://youtube.com/@werkplaatsmarc)
-- [Website](https://werkplaatsmarc.be)
+Made by [Werkplaats Marc](https://www.werkplaatsmarc.be).
 
----
+Built with [three.js](https://threejs.org/) (MIT) and [fflate](https://github.com/101arrowz/fflate) (MIT), bundled in `vendor/`.
 
-*Bedenk het, maak het.*
+## License
+
+MIT, see [LICENSE](LICENSE).
